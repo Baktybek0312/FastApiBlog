@@ -1,6 +1,6 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Text
 from sqlalchemy.orm import relationship
-from sqlalchemy_utils import EmailType, URLType
+from sqlalchemy_utils import EmailType
 
 from datetime import datetime
 
@@ -24,10 +24,8 @@ class Post(Base):
     __tablename__ = "posts"
 
     id = Column(Integer, primary_key=True)
-    created_date = Column(DateTime, default=datetime.utcnow)
-    title = Column(String)
-    url = Column(URLType, nullable=True)
-    body = Column(String)
+    title = Column(String, index=True)
+    description = Column(String, index=True)
     owner_id = Column(Integer, ForeignKey("users.id"))
 
     owner = relationship("User", back_populates="post")

@@ -24,11 +24,11 @@ class User(UserBase):
 
 class PostBase(BaseModel):
     title: str
-    body: str
+    description: Optional[str] = None
 
 
 class PostCreate(PostBase):
-    user_id: int
+    pass
 
 
 class PostList(PostBase):

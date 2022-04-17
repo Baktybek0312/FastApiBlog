@@ -1,31 +1,28 @@
-import shutil
-
-from fastapi import APIRouter, Depends, File, UploadFile, Form, status, HTTPException
-from sqlalchemy.orm import Session
-
 from .. import database, models, schemas
 from ..services import crud, auth
 
-router = APIRouter(tags=['Blogs'])
+
+from fastapi import APIRouter, Depends, status, HTTPException
+from sqlalchemy.orm import Session
+
+router = APIRouter(
+    tags=['Blogs']
+)
 
 get_db = database.get_db
 
 
 @router.post("/posts/create", status_code=status.HTTP_201_CREATED)
-def create_post(
-        title: str, body: str, file: UploadFile = File(...),
-        db: Session = Depends(get_db), current_user: models.User = Depends(auth.get_current_user)
+def create_post_for_user(
+        post: schemas.PostCreate, db: Session = Depends(get_db),
+        current_user: models.User = Depends(auth.get_current_user)
 ):
     user_id = current_user.id
 
-    with open('media/' + file.filename, 'wb') as image:
-        shutil.copyfileobj(file.file, image)
-    url = str("media/" + file.filename)
-
-    return crud.create_post(db=db, user_id=user_id, title=title, body=body, url=url)
+    return crud.create_post(db=db, post=post, user_id=user_id)
 
 
-@router.get("/posts")
+@router.get("/posts/all")
 def post_list(db: Session = Depends(get_db)):
     return crud.post_list(db=db)
 
