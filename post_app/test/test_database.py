@@ -2,7 +2,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from app.database import Base, get_db
+from post_app.database import Base, get_db
 from main import app
 
 SQLALCHEMY_DATABASE_URL = "postgresql://postgres:12345@localhost:5432/todo_db"
