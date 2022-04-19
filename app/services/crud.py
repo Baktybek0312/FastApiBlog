@@ -1,10 +1,10 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from app import models, schemas
 
 
-def create_post(db: Session, post: schemas.PostCreate, user_id: int):
-    db_post = models.Post(**post.dict(), owner_id=user_id)
+def create_post(db: Session, post: schemas.PostCreate, user: schemas.User):
+    db_post = models.Post(**post.dict(), owner=user)
     db.add(db_post)
     db.commit()
     db.refresh(db_post)
@@ -12,11 +12,13 @@ def create_post(db: Session, post: schemas.PostCreate, user_id: int):
 
 
 def get_posts(db: Session, id: int):
-    return db.query(models.Post).filter(models.Post.id == id).first()
+    return db.query(models.Post).filter(
+        models.Post.id == id).first()
 
 
 def post_list(db: Session):
-    return db.query(models.Post).all()
+    return db.query(models.Post).options(joinedload(models.Post.owner).load_only(
+        "username", "email")).all()
 
 
 def create_comment(db: Session, post_id: int, comment: schemas.CommentBase):

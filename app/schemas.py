@@ -33,17 +33,14 @@ class PostCreate(PostBase):
 
 class PostList(PostBase):
     created_date: Optional[datetime.datetime]
-    owner_id: int
-    owner: UserBase
+    owner: User
 
     class Config:
         orm_mode = True
 
 
 class CommentBase(BaseModel):
-    name: str
-    body: str
-    email: str
+    message: str
 
 
 class CommentList(CommentBase):

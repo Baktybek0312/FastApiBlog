@@ -1,9 +1,9 @@
 from .. import database, models, schemas
 from ..services import crud, auth
 
-
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
+
 
 router = APIRouter(
     tags=['Blogs']
@@ -17,19 +17,27 @@ def create_post_for_user(
         post: schemas.PostCreate, db: Session = Depends(get_db),
         current_user: models.User = Depends(auth.get_current_user)
 ):
-    user_id = current_user.id
-
-    return crud.create_post(db=db, post=post, user_id=user_id)
+    """
+    Данндая функция для создании поста
+    """
+    user = current_user
+    return crud.create_post(db=db, post=post, user=user)
 
 
 @router.get("/posts/all")
 def post_list(db: Session = Depends(get_db)):
+    """
+    Данндая функция возврашает все данные c поста
+    """
     return crud.post_list(db=db)
 
 
 @router.post("/posts/{post_id}/comment", response_model=schemas.CommentList)
 def create_comment(comment: schemas.CommentBase,
-                   post_id: int, db: Session = Depends(get_db)):
+                   post_id: int,
+                   db: Session = Depends(get_db),
+                   ):
+
     return crud.create_comment(db=db, post_id=post_id, comment=comment)
 
 

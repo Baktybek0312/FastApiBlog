@@ -1,4 +1,8 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, Text
+from sqlalchemy import (
+    Boolean, Column, ForeignKey,
+    Integer, String, DateTime,
+    Text,
+)
 from sqlalchemy.orm import relationship
 from sqlalchemy_utils import EmailType
 
@@ -24,7 +28,7 @@ class Post(Base):
     __tablename__ = "posts"
 
     id = Column(Integer, primary_key=True)
-    title = Column(String, index=True)
+    title = Column(String, unique=True, index=True)
     description = Column(String, index=True)
     owner_id = Column(Integer, ForeignKey("users.id"))
 
@@ -38,9 +42,8 @@ class Comment(Base):
     id = Column(Integer, primary_key=True)
     created_date = Column(DateTime, default=datetime.utcnow)
     is_active = Column(Boolean, default=True)
-    name = Column(String)
-    email = Column(EmailType)
-    body = Column(String)
+    message = Column(Text)
+    owner_id = Column(Integer, ForeignKey("users.id"))
     post_id = Column(Integer, ForeignKey("posts.id"))
 
     post_related = relationship("Post", back_populates="post_comment")
