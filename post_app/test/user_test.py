@@ -2,8 +2,8 @@
 # from fastapi.testclient import TestClient
 #
 #
-# app = FastAPI()
+# post_app = FastAPI()
 #
 #
-# @app.post("/users/")
+# @post_app.post_app("/users/")
 # # def create_user

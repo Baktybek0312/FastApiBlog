@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 
-from app import models
-from app.database import engine
-from app.routes import posts, users
+from post_app import models
+from post_app.database import engine
+from post_app.routes import users, posts
 
 app = FastAPI()
 

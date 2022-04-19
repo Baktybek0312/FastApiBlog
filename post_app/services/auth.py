@@ -1,4 +1,4 @@
-from app import schemas, models, database
+from post_app import schemas, database, models
 
 from datetime import datetime, timedelta
 from typing import Optional
@@ -7,7 +7,7 @@ from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from jose import JWTError, jwt
 from passlib.context import CryptContext
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordBearer
 
 SECRET_KEY = "5581975a54dfe3290403f1225094a2f0285b9e631dd425508c4289cb294e4038"
 ALGORITHM = "HS256"

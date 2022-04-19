@@ -22,6 +22,7 @@ class User(Base):
     is_active = Column(Boolean, default=True)
 
     post = relationship("Post", back_populates="owner")
+    comment = relationship("Comment", back_populates="owner_comment")
 
 
 class Post(Base):
@@ -46,4 +47,5 @@ class Comment(Base):
     owner_id = Column(Integer, ForeignKey("users.id"))
     post_id = Column(Integer, ForeignKey("posts.id"))
 
+    owner_comment = relationship("User", back_populates="comment")
     post_related = relationship("Post", back_populates="post_comment")

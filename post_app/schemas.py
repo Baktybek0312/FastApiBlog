@@ -1,5 +1,5 @@
 import datetime
-from typing import List, Optional
+from typing import Optional
 
 from pydantic import BaseModel
 from fastapi import Body
@@ -46,6 +46,7 @@ class CommentBase(BaseModel):
 class CommentList(CommentBase):
     id: int
     post_id: int
+    owner_comment: User
     created_date: Optional[datetime.datetime] = Body(None)
 
     class Config:

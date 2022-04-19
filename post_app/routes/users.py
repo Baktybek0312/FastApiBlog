@@ -1,9 +1,6 @@
 from datetime import timedelta
 
-from jose import JWTError, jwt
-
-from app import models
-from .. import database, schemas
+from .. import database, schemas, models
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, status, HTTPException
 
