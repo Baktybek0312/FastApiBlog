@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, status, HTTPException
 
 from ..database import engine
-from ..services import auth
+from ..services import oauth2
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 router = APIRouter(
@@ -41,7 +41,7 @@ async def read_users_me(current_user: models.User = Depends(auth.get_current_use
     return current_user
 
 
-@router.post("/users/")
+@router.post("/users/", status_code=status.HTTP_201_CREATED)
 def create_user(
         user: schemas.UserCreate, db: Session = Depends(get_db)
 ):
