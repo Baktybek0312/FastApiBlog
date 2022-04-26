@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session, joinedload
 from fastapi import APIRouter, Depends, status, HTTPException
 
 from .. import database, models, schemas
-from ..services import crud, auth
+from ..services import crud, oauth2
 
 
 router = APIRouter(
