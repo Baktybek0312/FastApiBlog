@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from post_app.core.settings import TEST_SQLALCHEMY_DATABASE_URL
+from core.settings import TEST_SQLALCHEMY_DATABASE_URL
 
 
 engine = create_engine(TEST_SQLALCHEMY_DATABASE_URL)

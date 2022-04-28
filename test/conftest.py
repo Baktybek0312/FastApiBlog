@@ -2,10 +2,10 @@ import pytest
 from starlette.testclient import TestClient
 
 from .test_database import TestingSessionLocal, engine
-from ..database import Base, get_db
+from db.database import Base, get_db
 from main import app
-from .. import models
-from ..services import oauth2
+from db import models
+from services import oauth2
 
 
 @pytest.fixture
@@ -42,7 +42,7 @@ def create_user(client):
 
 @pytest.fixture
 def create_access_token(create_user):
-    return auth.create_access_token({"user_id": create_user["id"]})
+    return oauth2.create_access_token({"user_id": create_user["id"]})
 
 
 @pytest.fixture

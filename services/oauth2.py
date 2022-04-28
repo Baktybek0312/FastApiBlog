@@ -1,4 +1,4 @@
-from post_app import schemas, database, models
+from db import models, database, schemas
 
 from datetime import datetime, timedelta
 from typing import Optional
@@ -8,6 +8,8 @@ from sqlalchemy.orm import Session
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer
+
+from db.models.models import User
 
 SECRET_KEY = "5581975a54dfe3290403f1225094a2f0285b9e631dd425508c4289cb294e4038"
 ALGORITHM = "HS256"
@@ -26,11 +28,11 @@ def get_password_hash(password):
 
 
 def get_user(db, username: str):
-    return db.query(models.User).filter(models.User.username == username).first()
+    return db.query(User).filter(User.username == username).first()
 
 
 def create_user(db: Session, user: schemas.UserCreate):
-    db_user = models.User(username=user.username, hashed_password=get_password_hash(user.password), email=user.email)
+    db_user = User(username=user.username, hashed_password=get_password_hash(user.password), email=user.email)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
