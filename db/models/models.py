@@ -8,7 +8,7 @@ from sqlalchemy_utils import EmailType
 
 from datetime import datetime
 
-from .database import Base
+from db.database import Base
 
 
 class User(Base):
