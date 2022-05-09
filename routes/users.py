@@ -43,7 +43,8 @@ async def read_users_me(current_user: models.User = Depends(oauth2.get_current_u
 def create_user(
         user: schemas.UserCreate, db: Session = Depends(get_db)
 ):
-    db_user = oauth2.get_user(db, username=user.username)
-    if db_user:
+    sign_up_user = oauth2.get_user(db, username=user.username)
+    if sign_up_user:
         raise HTTPException(status_code=400, detail="Email already registered")
-    return oauth2.create_user(db=db, user=user)
+    return f"you have successfully sign up {user.username}"
+
