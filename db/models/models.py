@@ -12,7 +12,10 @@ from db.database import Base
 
 
 class User(Base):
-    __tablename__ = "users"
+    """
+
+    """
+    __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
     created_date = Column(DateTime, default=datetime.utcnow)
@@ -44,8 +47,8 @@ class Comment(Base):
     created_date = Column(DateTime, default=datetime.utcnow)
     is_active = Column(Boolean, default=True)
     message = Column(Text)
-    owner_id = Column(Integer, ForeignKey("users.id"))
-    post_id = Column(Integer, ForeignKey("posts.id"))
+    owner_id = Column(Integer, ForeignKey("core.users.id", ondelete="CASCADE"))
+    post_id = Column(Integer, ForeignKey("core.posts.id", ondelete="CASCADE"))
 
     owner_comment = relationship("User", back_populates="comment")
     post_related = relationship("Post", back_populates="post_comment")

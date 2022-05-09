@@ -1,5 +1,6 @@
 from logging.config import fileConfig
 
+import sqlalchemy_utils
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
@@ -16,14 +17,29 @@ if config.config_file_name is not None:
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-from db.database import Base
-
-target_metadata = Base.metadata
+from db.models import models
+target_metadata = models.Base.metadata
+# target_metadata = None
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
+
+
+def render_item(type_, obj, autogen_context):
+    """Apply custom rendering for selected items"""
+
+    if type_ == "type" and isinstance(obj, sqlalchemy_utils.types.uuid.UUIDType):
+        # Add import for this type
+        autogen_context.imports.add("import sqlalchemy_utils")
+
+        autogen_context.imports.add("import uuid")
+
+        return "sqlalchemy_utils.types.uuid.UUIDType(), default=uuid.uuid4"
+
+    # Default rendering for other objects
+    return False
 
 
 def run_migrations_offline():
@@ -65,7 +81,8 @@ def run_migrations_online():
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata
+            connection=connection, target_metadata=target_metadata,
+            render_item=render_item,
         )
 
         with context.begin_transaction():
