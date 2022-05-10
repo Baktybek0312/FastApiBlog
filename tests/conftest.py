@@ -4,7 +4,7 @@ from starlette.testclient import TestClient
 from .test_database import TestingSessionLocal, engine
 from db.database import Base, get_db
 from main import app
-from db import models
+from db.models import models
 from services import oauth2
 
 
@@ -33,10 +33,12 @@ def client(session):
 
 @pytest.fixture
 def create_user(client):
-    response = client.post("/user/users/", json={"username": "Harry213", "email": "harrystyles@england.com",
-                                                 "password": "harrypassword"})
+    response = client.post(
+        "/user/users/",
+        json={"username": "Harry213", "email": "harrystyles@england.com",
+              "password": "harrypassword"}
+    )
     new_user = response.json()
-    new_user["password"] = "harrypassword"
     return new_user
 
 

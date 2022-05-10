@@ -10,8 +10,8 @@ from services import oauth2
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 router = APIRouter(
-    prefix="/user",
-    tags=['Users']
+    tags=['Users'],
+    prefix='/users',
 )
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
@@ -34,17 +34,17 @@ async def login_for_access_token(db: Session = Depends(get_db), form_data: OAuth
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@router.get("/me/")
+@router.get("/me")
 async def read_users_me(current_user: models.User = Depends(oauth2.get_current_user)):
     return current_user
 
 
-@router.post("/users/", status_code=status.HTTP_201_CREATED)
-def create_user(
-        user: schemas.UserCreate, db: Session = Depends(get_db)
-):
+@router.post("/create", status_code=status.HTTP_201_CREATED)
+def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     sign_up_user = oauth2.get_user(db, username=user.username)
     if sign_up_user:
         raise HTTPException(status_code=400, detail="Email already registered")
-    return f"you have successfully sign up {user.username}"
+    else:
+        create_users = oauth2.create_user(db=db, user=user)
+    return f"you have successfully sign up {create_users.username}"
 

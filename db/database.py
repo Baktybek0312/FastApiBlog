@@ -8,7 +8,7 @@ from core.settings import settings
 SQLALCHEMY_DATABASE_URL = settings.DATABASE_URL
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine,)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 metadata_obj = MetaData(schema='core')
 Base = declarative_base(metadata=metadata_obj)
