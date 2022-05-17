@@ -12,9 +12,6 @@ from db.database import Base
 
 
 class User(Base):
-    """
-
-    """
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
@@ -32,7 +29,7 @@ class Post(Base):
     __tablename__ = "posts"
 
     id = Column(Integer, primary_key=True)
-    title = Column(String, unique=True, index=True)
+    title = Column(String, index=True)
     description = Column(String, index=True)
     owner_id = Column(Integer, ForeignKey("users.id"))
 

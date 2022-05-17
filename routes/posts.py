@@ -6,14 +6,16 @@ from db import models, database, schemas
 from db.models import models
 from services import posts, oauth2, comments
 
+
 router = APIRouter(
-    tags=['Blogs']
+    tags=['Posts'],
+    prefix='/posts'
 )
 
 get_db = database.get_db
 
 
-@router.post("/posts/create", status_code=status.HTTP_201_CREATED)
+@router.post("/create", status_code=status.HTTP_201_CREATED)
 def create_post_for_user(
         post: schemas.PostCreate, db: Session = Depends(get_db),
         current_user: models.User = Depends(oauth2.get_current_user)
@@ -25,7 +27,7 @@ def create_post_for_user(
     return posts.create_post(db=db, post=post, user=user)
 
 
-@router.get("/posts/all")
+@router.get("/list")
 def post_list(db: Session = Depends(get_db)):
     """
     Для вывода всех постов
@@ -33,7 +35,7 @@ def post_list(db: Session = Depends(get_db)):
     return posts.post_list(db=db)
 
 
-@router.post("/posts/{post_id}/comment", response_model=schemas.CommentList)
+@router.post("/{post_id}/comments", response_model=schemas.CommentList)
 def create_comment(comment: schemas.CommentBase,
                    post_id: int, db: Session = Depends(get_db),
                    current_user: models.User = Depends(oauth2.get_current_user)
@@ -45,7 +47,7 @@ def create_comment(comment: schemas.CommentBase,
     return comments.create_comment(db=db, post_id=post_id, comment=comment, user=user)
 
 
-@router.get("/posts/{post_id}")
+@router.get("/{post_id}")
 def post_detail(post_id: int, db: Session = Depends(get_db)):
     """
     Для получение инфо одного поста
