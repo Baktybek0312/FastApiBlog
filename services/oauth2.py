@@ -1,5 +1,3 @@
-from db import models, database, schemas
-
 from datetime import datetime, timedelta
 from typing import Optional
 
@@ -10,6 +8,7 @@ from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer
 
 from db.models.models import User
+from db import database, schemas
 
 SECRET_KEY = "5581975a54dfe3290403f1225094a2f0285b9e631dd425508c4289cb294e4038"
 ALGORITHM = "HS256"
@@ -28,7 +27,8 @@ def get_password_hash(password):
 
 
 def get_user(db, username: str):
-    return db.query(User).filter(User.username == username).first()
+    user = db.query(User).filter(User.username == username).first()
+    return user
 
 
 def create_user(db: Session, user: schemas.UserCreate):

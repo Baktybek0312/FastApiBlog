@@ -8,7 +8,7 @@ from services import posts, oauth2, comments
 
 
 router = APIRouter(
-    tags=['Blogs'],
+    tags=['Posts'],
     prefix='/posts'
 )
 

@@ -40,11 +40,10 @@ async def read_users_me(current_user: models.User = Depends(oauth2.get_current_u
 
 
 @router.post("/create", status_code=status.HTTP_201_CREATED)
-def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+def create_users(user: schemas.UserCreate, db: Session = Depends(get_db)):
     sign_up_user = oauth2.get_user(db, username=user.username)
     if sign_up_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     else:
-        create_users = oauth2.create_user(db=db, user=user)
-    return f"you have successfully sign up {create_users.username}"
-
+        create_user = oauth2.create_user(db=db, user=user)
+    return f"you have successfully sign up {create_user.username}"
