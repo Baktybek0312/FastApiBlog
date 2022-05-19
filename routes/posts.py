@@ -16,7 +16,7 @@ get_db = database.get_db
 
 
 @router.post("/create", status_code=status.HTTP_201_CREATED)
-def create_post_for_user(
+def create_posts_for_user(
         post: schemas.PostCreate, db: Session = Depends(get_db),
         current_user: models.User = Depends(oauth2.get_current_user)
 ):
