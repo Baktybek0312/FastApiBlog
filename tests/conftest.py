@@ -8,12 +8,11 @@ from main import app
 
 class BaseConfig:
 
-    @pytest.fixture
+    @pytest.fixture(scope='session')
     def session(self):
         """
         Создаем базу данных
         """
-
         Base.metadata.drop_all(bind=engine)
         Base.metadata.create_all(bind=engine)
 
@@ -63,22 +62,32 @@ class BaseConfig:
         auth_token = response["access_token"]
         headers = {"Authorization": f"Bearer {auth_token}"}
         return headers
-
-    @pytest.fixture
-    def create_test_post(self, client, authorized_client):
-        """
-        для создание тестовых постов
-        """
-        data = {
-            "description": "adnqwmdmwq;",
-            "id": 1,
-            "title": "asdqwwqwd",
-            "owner_id": 1,
-            "owner": {
-                "id": 1,
-                "email": "admin@gmail.com",
-                "username": "admin"
-            }
-        }
-        response = client.post('/posts/create', json=data, headers=authorized_client)
-        return response.json()
+    #
+    # @pytest.fixture
+    # def create_test_post(self, session):
+    #     """
+    #     для создание тестовых постов
+    #     """
+    #     data = [{
+    #         "title": "First Post",
+    #         "description": "First Post Content",
+    #     },
+    #         {
+    #             "title": "Second Post",
+    #             "description": "Second Post Content",
+    #         },
+    #         {
+    #             "title": "Third Post",
+    #             "description": "Third Post Content",
+    #         }]
+    #
+    #     def create_post_model(post):
+    #         return models.Post(**post)
+    #
+    #     post_map = map(create_post_model, data)
+    #     posts = list(post_map)
+    #     session.add_all(posts)
+    #     session.commit()
+    #
+    #     posts = session.query(models.Post).all()
+    #     return posts

@@ -1,52 +1,61 @@
-import json
-
-from sqlalchemy import true
-
 from tests.conftest import BaseConfig
 
 
 class TestPost(BaseConfig):
 
-    def test_get_id_post(self, client, create_test_post):
+    def test_create_post(self, client, authorized_client):
+        """
+        для создание тестовых постов
+        """
+        data = {
+            'title': 'Testing Title',
+            'description': 'Hello',
+        }
+        response = client.post('/posts/create', json=data, headers=authorized_client)
+        assert response.status_code == 201, response.json() == 'successfully created'
+
+    def test_get_id_post(self, client):
         """
         Для получение одного поста
         """
-        response = client.get('/posts/1', json=json.dumps(create_test_post))
+        post_id = 1
+        response = client.get(f'/posts/{post_id}')
         assert response.status_code == 200
         return response.json() == {
-            "post_app": {
-                "description": "adnqwmdmwq;",
+            "description": "adnqwmdmwq;",
+            "id": 1,
+            "title": "asdqwwqwd",
+            "owner_id": 1,
+            "owner": {
                 "id": 1,
-                "title": "asdqwwqwd",
-                "owner_id": 2,
-                "owner": {
-                    "id": 2,
-                    "email": "admin@gmail.com",
-                    "username": "admin"
-                }
-            },
-            "comments": [
-                {
-                    "is_active": true,
-                    "id": 1,
-                    "owner_id": 3,
-                    "created_date": "2022-05-10T05:46:23.173248",
-                    "message": "asdqwdqwdqwdqd",
-                    "post_id": 1,
-                    "owner_comment": {
-                        "id": 3,
-                        "email": "user1@gmail.com",
-                        "username": "user"
-                    }
-                }
-            ]
+                "email": "admin@gmail.com",
+                "username": "admin"
+            }
         }
 
-    def test_post_list(self, client):
+    def test_comment_create(self, client, authorized_client):
+        """
+        тест для проверки комметрии к посту
+        """
+        post_id = 1
+        data = {'message': 'Hello World!'}
+        response = client.post(f'/posts/{post_id}/comments', json=data, headers=authorized_client)
+        assert response.status_code == 200
+
+    def test_posts_list(self, client):
         """
         Для вывода всех тестовых постов
         """
         response = client.get('/posts/list')
         assert response.status_code == 200
-        return response.json()
-
+        return response.json() == {
+            "description": "adnqwmdmwq;",
+            "id": 1,
+            "title": "asdqwwqwd",
+            "owner_id": 1,
+            "owner": {
+                "id": 1,
+                "email": "admin@gmail.com",
+                "username": "admin"
+            }
+        }
