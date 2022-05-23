@@ -40,39 +40,75 @@ ALGORITHM="HS256"
 TEST_SQLALCHEMY_DATABASE_URL="postgresql://user:password@host:port/database_name"
 ```
 6. Проверьте базу, так как все миграции проходят через [Alembic](https://alembic.sqlalchemy.org/en/latest/index.html), также в проекте мы используем [автоматическое создание миграции](https://alembic.sqlalchemy.org/en/latest/autogenerate.html)
-```sh
-$ alembic init migration
-$ alembic revision --autogenerate -m "text" 
-$ alembic upgrade head
-```
-8. Запускаем сервер:
+   ```sh
+   $ alembic init migration
+   $ alembic revision --autogenerate -m "text_commit" 
+   $ alembic upgrade head
+   ```
+7. Запускаем сервер:
+   ```sh
+   (env)$ uvicorn main:app --reload
+   ```
+   
+   * Навигация для API *`http://127.0.0.1:8000/docs` и также по адресу `http://127.0.0.1:8000/redoc`,
+   вы можете ссалыться на автоматическая генерация документации в соответствии с OpenAPI с помощью интерактивного интерфейса Swagger и работать с endpoint(urls)
 
-```sh
-(env)$ uvicorn main:app --reload
-```
-* Навигация для API *`http://127.0.0.1:8000/docs` и также по адресу `http://127.0.0.1:8000/redoc`,
-вы можете ссалыться на автоматическая генерация документации в соответствии с OpenAPI с помощью интерактивного интерфейса Swagger и работать с endpoint(urls)
+8. Установите [Postman](https://www.postman.com/downloads/) для работы с эндпоинтами FastApi
+   - импортируйте файл ***BlogFastApi.postman_collection.json***
+   - Эндпоинты для Юзера
+   ##### http://127.0.0.1:8000/users/create  Для создание пользователя
+   <details>
+      <summary>Show more</summary>
+      input:
+      {
+         'username': 'test_user',
+         'email': 'test_user@example.com',
+         'password': 'test_password_hash'
+      }
+      output:
+         "you have successfully sign up test_user"
+   </details>
 
-7. Установите [Postman](https://www.postman.com/downloads/) для работы с эндпоинтами FastApi
-- импортируйте файл ***BlogFastApi.postman_collection.json***
-  - Эндпоинты для Юзера
-    ```sh
-    http://127.0.0.1:8000/users/create # для создание пользователя
-    http://127.0.0.1:8000/users/token  # для получение токена
-    http://127.0.0.1:8000/users/me # Возвращает информацию о пользователе
-    ```
-  - Эндпоинты для Постов 
-    ```sh
-    http://127.0.0.1:8000/posts/create # для создание постов
-    http://127.0.0.1:8000/posts/list  # для получение всех постов
-    http://127.0.0.1:8000/posts/{'post_id'} # для получение детальную информацию одного поста
-    ```
-  - Эндпоинты для Комментарии
-    ```sh
-    http://127.0.0.1:8000/posts/{post_id}/comments # для создание комментариев
-    ```
+   ##### http://127.0.0.1:8000/users/token  Для получение токена
 
-8. Последний штрих это тестирование проекта
+   <details>
+      <summary>Show more</summary>
+      input:
+      username: test_user
+      password: test_password_hash
+      output: 
+      {
+      "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNjUzMzA0NjcwfQ.g4wLtG2wceZLaydoVFbVghFTGt27Qxqb3bAQ010Q6D8",
+      "token_type": "bearer"
+      }
+   </details>      
+   ```sh
+            http://127.0.0.1:8000/users/create # для создание пользователя
+            ```
+             ```sh
+            http://127.0.0.1:8000/users/token  # для получение токена
+            ```
+             ```sh
+            http://127.0.0.1:8000/users/me # Возвращает информацию о пользователе
+            ```
+
+          - Эндпоинты для Постов 
+              ```sh
+              http://127.0.0.1:8000/posts/create # для создание постов
+              ```
+      
+             ```sh
+              http://127.0.0.1:8000/posts/list  # для получение всех постов
+              ```
+             ```sh
+              http://127.0.0.1:8000/posts/{'post_id'} # для получение детальную информацию одного поста
+              ```
+            - Эндпоинты для Комментарии
+              ```sh
+              http://127.0.0.1:8000/posts/{post_id}/comments # для создание комментариев
+              ```
+
+9. Последний штрих это тестирование проекта
 - создаем БД, как и ранее в файле .env мы передали параметры **TEST_SQLALCHEMY_DATABASE_URL**
 - запускаем [Pytest](https://docs.pytest.org/en/6.2.x/contents.html)
 ```sh
