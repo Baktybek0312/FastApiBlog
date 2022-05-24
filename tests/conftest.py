@@ -62,32 +62,4 @@ class BaseConfig:
         auth_token = response["access_token"]
         headers = {"Authorization": f"Bearer {auth_token}"}
         return headers
-    #
-    # @pytest.fixture
-    # def create_test_post(self, session):
-    #     """
-    #     для создание тестовых постов
-    #     """
-    #     data = [{
-    #         "title": "First Post",
-    #         "description": "First Post Content",
-    #     },
-    #         {
-    #             "title": "Second Post",
-    #             "description": "Second Post Content",
-    #         },
-    #         {
-    #             "title": "Third Post",
-    #             "description": "Third Post Content",
-    #         }]
-    #
-    #     def create_post_model(post):
-    #         return models.Post(**post)
-    #
-    #     post_map = map(create_post_model, data)
-    #     posts = list(post_map)
-    #     session.add_all(posts)
-    #     session.commit()
-    #
-    #     posts = session.query(models.Post).all()
-    #     return posts
+

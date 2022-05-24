@@ -10,8 +10,10 @@ class TestUser(BaseConfig):
         """
         data = {'username': 'leodoe', 'email': 'leodoe@exapml.com', 'password': 'leodoepass'}
         response = client.post('/users/create', json=data)
-        assert response.status_code == 201, response.json() == 'success user'
+        assert response.status_code == 201
+        return response.json() == 'success user'
 
+    def test_check_create_user(self, client):
         data = {'username': 'leodoe', 'email': 'leodoe@exapml.com', 'password': 'leodoepass'}
         response = client.post('/users/create', json=data)
         assert response.status_code == 400, response.json() == 'already registered'
@@ -23,6 +25,7 @@ class TestUser(BaseConfig):
         response = client.post('/users/token', data={'username': 'leodoe', 'password': 'leodoepass'})
         assert response.status_code == 200, response.json() == 'SUCCESSFULLY autorised'
 
+    def test_check_get_token(self, client):
         response = client.post('/users/token', data={'username': 'leodoe', 'password': 'qda'})
         assert response.status_code == 401, response.json() == 'the username or password is not correct'
 
