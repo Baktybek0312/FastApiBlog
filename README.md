@@ -81,33 +81,289 @@ TEST_SQLALCHEMY_DATABASE_URL="postgresql://user:password@host:port/database_name
       "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNjUzMzA0NjcwfQ.g4wLtG2wceZLaydoVFbVghFTGt27Qxqb3bAQ010Q6D8",
       "token_type": "bearer"
       }
-   </details>      
-   ```sh
-            http://127.0.0.1:8000/users/create # для создание пользователя
-            ```
-             ```sh
-            http://127.0.0.1:8000/users/token  # для получение токена
-            ```
-             ```sh
-            http://127.0.0.1:8000/users/me # Возвращает информацию о пользователе
-            ```
-
-          - Эндпоинты для Постов 
-              ```sh
-              http://127.0.0.1:8000/posts/create # для создание постов
-              ```
+   </details>
+   
+   ##### http://127.0.0.1:8000/users/me  Возвращает информацию о пользователе
+      <details>
+      <summary>Show more</summary>
+      <p>input:<br>
+      "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNjUzMzA0NjcwfQ.g4wLtG2wceZLaydoVFbVghFTGt27Qxqb3bAQ010Q6D8",<br>
       
-             ```sh
-              http://127.0.0.1:8000/posts/list  # для получение всех постов
-              ```
-             ```sh
-              http://127.0.0.1:8000/posts/{'post_id'} # для получение детальную информацию одного поста
-              ```
-            - Эндпоинты для Комментарии
-              ```sh
-              http://127.0.0.1:8000/posts/{post_id}/comments # для создание комментариев
-              ```
+      output:<br>
+      {<br>
+         "email": "user1@gmail.com",<br>
+         "hashed_password": "$2b$12$/Xo7FRTI5TwBFuFK4MQ/s.PKIIIAUVlQQ36EMmKItEkEUN4GL/kFK",<br>
+         "id": 3,<br>
+         "created_date": "2022-05-10T05:43:56.400840",<br>
+         "username": "user",<br>
+         "is_active": true<br>
+      }</p>
+      </details>
 
+- Эндпоинты для Постов 
+
+   ##### http://127.0.0.1:8000/posts/create  Для создание постов
+   <details>
+      <summary>Show more</summary>
+      <p>input:<br>
+         {<br>
+            "title": " Test title",<br>
+            "description": " Hello World!"<br>
+         }<br>
+      output:<br>
+      {<br>
+         "id": 20,<br>
+         "description": " Hello World!",<br>
+         "title": " Test title",<br>
+         "owner_id": 3<br>
+      }</p>
+   </details>
+      
+   ##### http://127.0.0.1:8000/posts/list Для получение всех постов
+   <details>
+      <summary>Show more</summary>
+      <p>
+      output:<br>
+      [<br>
+    {<br>
+        "id": 1,<br>
+        "description": "adnqwmdmwq;",<br>
+        "title": "asdqwwqwd",<br>
+        "owner_id": 2,<br>
+        "owner": {<br>
+            "email": "admin@gmail.com",<br>
+            "id": 2,<br>
+            "username": "admin"<br>
+        }<br>
+    },<br>
+    {<br>
+        "id": 6,<br>
+        "description": "adnqwmdmwq;",<br>
+        "title": "asdqwwqwd",<br>
+        "owner_id": 2,<br>
+        "owner": {<br>
+            "email": "admin@gmail.com",<br>
+            "id": 2,<br>
+            "username": "admin"<br>
+        }<br>
+    },<br>
+    {<br>
+        "id": 7,<br>
+        "description": "adnqwmdmwq;",<br>
+        "title": "asdqwwqwd",<br>
+        "owner_id": 3,<br>
+        "owner": {<br>
+            "email": "user1@gmail.com",<br>
+            "id": 3,<br>
+            "username": "user",<br>
+        }<br>
+    },<br>
+    {<br>
+        "id": 8,<br>
+        "description": "adnqwmdmwq;",<br>
+        "title": "asdqwwqwd",<br>
+        "owner_id": 3,<br>
+        "owner": {<br>
+            "email": "user1@gmail.com",<br>
+            "id": 3,<br>
+            "username": "user"<br>
+        }<br>
+    },<br>
+    {<br>
+        "id": 9,<br>
+        "description": "adnqwmdmwq;",<br>
+        "title": "asdqwwqwd",<br>
+        "owner_id": 3,<br>
+        "owner": {<br>
+            "email": "user1@gmail.com",<br>
+            "id": 3,<br>
+            "username": "user"<br>
+        }<br>
+    },<br>
+    {<br>
+        "id": 10,<br>
+        "description": "dwqdqwdw;",<br>
+        "title": "awdww",<br>
+        "owner_id": 3,<br>
+        "owner": {<br>
+            "email": "user1@gmail.com",<br>
+            "id": 3,<br>
+            "username": "user"<br>
+        }<br>
+    },<br>
+    {<br>
+        "id": 11,<br>
+        "description": "dwqdqwdw;",<br>
+        "title": "awdww",<br>
+        "owner_id": 3,<br>
+        "owner": {<br>
+            "email": "user1@gmail.com",<br>
+            "id": 3,<br>
+            "username": "user"<br>
+        }<br>
+    },<br>
+    {<br>
+        "id": 12,<br>
+        "description": "dwqdqwdw;",<br>
+        "title": "awdww",<br>
+        "owner_id": 3,<br>
+        "owner": {<br>
+            "email": "user1@gmail.com",<br>
+            "id": 3,<br>
+            "username": "user",<br>
+        }<br>
+    },<br>
+    {<br>
+        "id": 13,<br>
+        "description": "dwqdqwdw;",<br>
+        "title": "awdww",<br>
+        "owner_id": 3,<br>
+        "owner": {<br>
+            "email": "user1@gmail.com",<br>
+            "id": 3,<br>
+            "username": "user"<br>
+        }<br>
+    },<br>
+    {<br>
+        "id": 14,<br>
+        "description": "dwqdqwd;",<br>
+        "title": "asdqwddsvwemclsa",<br>
+        "owner_id": 3,<br>
+        "owner": {<br>
+            "email": "user1@gmail.com",<br>
+            "id": 3,<br>
+            "username": "user"<br>
+        }<br>
+    },<br>
+    {<br>
+        "id": 15,<br>
+        "description": "dwqdqwd;",<br>
+        "title": "asdqwddsvwemclsa",<br>
+        "owner_id": 3,<br>
+        "owner": {<br>
+            "email": "user1@gmail.com",<br>
+            "id": 3,<br>
+            "username": "user"<br>
+        }<br>
+    },<br>
+    {<br>
+        "id": 16,<br>
+        "description": "dwqdqwd;",<br>
+        "title": "asdqwddsvwemclsa",<br>
+        "owner_id": 3,<br>
+        "owner": {<br>
+            "email": "user1@gmail.com",<br>
+            "id": 3,<br>
+            "username": "user"<br>
+        }<br>
+    },<br>
+    {<br>
+        "id": 17,<br>
+        "description": "вфывйцвйц;",<br>
+        "title": "Еуфвй",<br>
+        "owner_id": 3,<br>
+        "owner": {<br>
+            "email": "user1@gmail.com",<br>
+            "id": 3,<br>
+            "username": "user"<br>
+        }<br>
+    },<br>
+    {<br>
+        "id": 18,<br>
+        "description": "",<br>
+        "title": "Еуфвй",<br>
+        "owner_id": 3,<br>
+        "owner": {<br>
+            "email": "user1@gmail.com",<br>
+            "id": 3,<br>
+            "username": "user"<br>
+        }<br>
+    },<br>
+    {<br>
+        "id": 19,<br>
+        "description": "",<br>
+        "title": "",<br>
+        "owner_id": 3,<br>
+        "owner": {<br>
+            "email": "user1@gmail.com",<br>
+            "id": 3,<br>
+            "username": "user"<br>
+        }<br>
+    },<br>
+    {<br>
+        "id": 20,<br>
+        "description": " Hello World!",<br>
+        "title": " Test title",<br>
+        "owner_id": 3,<br>
+        "owner": {<br>
+            "email": "user1@gmail.com",<br>
+            "id": 3,<br>
+            "username": "user"<br>
+        }<br>
+    }<br>
+  ]</p>
+   </details>
+  
+  ##### http://127.0.0.1:8000/posts/{'post_id'} Для получение детальную информацию одного поста
+    <details>
+      <summary>Show more</summary>
+      <p>input:<br>
+         }<br>
+      output:<br>
+      {<br>
+    "post_app": {<br>
+        "id": 1,<br>
+        "description": "adnqwmdmwq;",<br>
+        "title": "asdqwwqwd",<br>
+        "owner_id": 2,<br>
+        "owner": {<br>
+            "email": "admin@gmail.com",<br>
+            "id": 2,<br>
+            "username": "admin"<br>
+        }<br>
+    },
+    "comments": [<br>
+        {
+            "id": 1,<br>
+            "created_date": "2022-05-10T05:46:23.173248",<br>
+            "message": "asdqwdqwdqwdqd",<br>
+            "post_id": 1,<br>
+            "is_active": true,<br>
+            "owner_id": 3,<br>
+            "owner_comment": {<br>
+                "email": "user1@gmail.com",<br>
+                "id": 3,<br>
+                "username": "user"<br>
+            }<br>
+        }<br>
+    ]<br>
+   }<br>
+         "owner_id": 3<br>
+      }</p>
+   </details>
+  
+- Эндпоинты для Комментарии
+   #####              http://127.0.0.1:8000/posts/{post_id}/comments Для создание комментариев
+
+   <details>
+      <summary>Show more</summary>
+      <p>input:<br>
+         {<br>
+         "message": "asdqwdqwdqwdqd"<br>
+         }<br>
+      output:<br>
+      {<br>
+         "message": "asdqwdqwdqwdqd",<br>
+         "id": 2,<br>
+         "post_id": 1,<br>
+         "owner_comment": {<br>
+        "username": "user",<br>
+        "id": 3,<br>
+        "is_active": true<br>
+    },<br>
+    "created_date": "2022-05-24T05:18:54.658754"<br>
+   }</p><br>
+   </details>
 9. Последний штрих это тестирование проекта
 - создаем БД, как и ранее в файле .env мы передали параметры **TEST_SQLALCHEMY_DATABASE_URL**
 - запускаем [Pytest](https://docs.pytest.org/en/6.2.x/contents.html)
