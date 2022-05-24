@@ -8,12 +8,11 @@ from main import app
 
 class BaseConfig:
 
-    @pytest.fixture
+    @pytest.fixture(scope='session')
     def session(self):
         """
         Создаем базу данных
         """
-
         Base.metadata.drop_all(bind=engine)
         Base.metadata.create_all(bind=engine)
 
@@ -64,21 +63,3 @@ class BaseConfig:
         headers = {"Authorization": f"Bearer {auth_token}"}
         return headers
 
-    @pytest.fixture
-    def create_test_post(self, client, authorized_client):
-        """
-        для создание тестовых постов
-        """
-        data = {
-            "description": "adnqwmdmwq;",
-            "id": 1,
-            "title": "asdqwwqwd",
-            "owner_id": 1,
-            "owner": {
-                "id": 1,
-                "email": "admin@gmail.com",
-                "username": "admin"
-            }
-        }
-        response = client.post('/posts/create', json=data, headers=authorized_client)
-        return response.json()

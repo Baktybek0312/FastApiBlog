@@ -6,6 +6,8 @@ certifi==2021.10.8
 charset-normalizer==2.0.12
 click==8.1.2
 ecdsa==0.17.0
+factory-boy==3.2.1
+Faker==13.11.1
 fastapi==0.75.1
 greenlet==1.1.2
 h11==0.13.0
@@ -25,6 +27,7 @@ pyasn1==0.4.8
 pydantic==1.9.0
 pyparsing==3.0.8
 pytest==7.1.2
+python-dateutil==2.8.2
 python-dotenv==0.20.0
 python-jose==3.3.0
 python-multipart==0.0.5
