@@ -38,6 +38,16 @@ class BaseConfig:
 
         yield TestClient(app)
 
+    @classmethod
+    def setup_class(cls):
+        "Выполняется один раз за класс"
+        print('START')
+
+    @classmethod
+    def teardown_class(cls):
+        "Запуск в конце класса"
+        print('END')
+
     @pytest.fixture
     def create_user(self, client):
         """
