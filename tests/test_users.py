@@ -4,26 +4,31 @@ from tests.conftest import BaseConfig
 
 
 class TestUser(BaseConfig):
-    def test_create_user(self, client):
+    def test_create_user(self, client, session):
         """
         проверка создание полььзователя
         """
         data = {'username': 'leodoe', 'email': 'leodoe@exapml.com', 'password': 'leodoepass'}
         response = client.post('/users/create', json=data)
         assert response.status_code == 201
-        return response.json() == 'success user'
+        return response.json() == f'you have successfully sign up {response}'
 
     def test_check_create_user(self, client):
         data = {'username': 'leodoe', 'email': 'leodoe@exapml.com', 'password': 'leodoepass'}
         response = client.post('/users/create', json=data)
-        assert response.status_code == 400, response.json() == 'already registered'
+        assert response.status_code == 400
+        return response.json() == 'already registered'
 
     def test_get_token(self, client):
         """
         проверка для получение токена
         """
         response = client.post('/users/token', data={'username': 'leodoe', 'password': 'leodoepass'})
-        assert response.status_code == 200, response.json() == 'SUCCESSFULLY autorised'
+        assert response.status_code == 200
+        return response.json() == {
+            "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNjUzNDUzNDMyfQ.1Hij8IwlQUYGDZUqxOhpadvpQ4puX_gQRRNJb4P0Om0",
+            "token_type": "bearer"
+        }
 
     def test_check_get_token(self, client):
         response = client.post('/users/token', data={'username': 'leodoe', 'password': 'qda'})
