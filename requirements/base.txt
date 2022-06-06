@@ -6,8 +6,6 @@ certifi==2021.10.8
 charset-normalizer==2.0.12
 click==8.1.2
 ecdsa==0.17.0
-factory-boy==3.2.1
-Faker==13.11.1
 fastapi==0.75.1
 greenlet==1.1.2
 h11==0.13.0

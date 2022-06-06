@@ -72,4 +72,3 @@ class BaseConfig:
         auth_token = response["access_token"]
         headers = {"Authorization": f"Bearer {auth_token}"}
         return headers
-

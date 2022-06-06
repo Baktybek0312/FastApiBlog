@@ -32,7 +32,7 @@ def post_list(db: Session = Depends(get_db)):
     """
     Для вывода всех постов
     """
-    return posts.post_list(db=db)
+    return {"list": posts.post_list(db=db)}
 
 
 @router.post("/{post_id}/comments", response_model=schemas.CommentList)
